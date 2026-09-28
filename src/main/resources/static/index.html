@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f6f3">
+  <meta name="description" content="Track candidate applications, interview progress and hiring feedback.">
+  <title>Interview Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to applications</a>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Interview Management home">
+      <span class="brand-mark" aria-hidden="true">H</span>
+      <span>Hireflow<span class="brand-subtitle">INTERVIEW MANAGEMENT</span></span>
+    </a>
+    <div class="connection-status" id="connectionStatus" role="status">
+      <span class="connection-dot" aria-hidden="true"></span>
+      <span id="connectionLabel">Connecting</span>
+    </div>
+  </header>
+
+  <main id="main-content" class="page-shell">
+    <section class="page-heading" id="top" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">TALENT OPERATIONS</p>
+        <h1 id="page-title">Candidate pipeline</h1>
+        <p class="page-description">Applications, interview progress and candidate feedback in one place.</p>
+      </div>
+      <button class="button button-secondary" id="refreshButton" type="button">
+        <span class="refresh-icon" aria-hidden="true">&#8635;</span>
+        Refresh
+      </button>
+    </section>
+
+    <div class="notice" id="notice" role="status" aria-live="polite" hidden></div>
+
+    <section class="metrics" aria-label="Application summary">
+      <article class="metric">
+        <span class="metric-label">All applications</span>
+        <strong id="totalCount">--</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">In progress</span>
+        <strong id="progressCount">--</strong>
+      </article>
+      <article class="metric">
+        <span class="metric-label">Interview stage</span>
+        <strong id="interviewCount">--</strong>
+      </article>
+      <article class="metric metric-accent">
+        <span class="metric-label">Offers</span>
+        <strong id="offerCount">--</strong>
+      </article>
+    </section>
+
+    <section class="workspace" aria-label="Manage candidate applications">
+      <aside class="form-panel" aria-labelledby="new-application-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">ADD TO PIPELINE</p>
+            <h2 id="new-application-title">New application</h2>
+          </div>
+        </div>
+        <form id="applicationForm">
+          <label for="candidateName">Candidate name <span aria-hidden="true">*</span></label>
+          <input id="candidateName" name="candidateName" autocomplete="name" maxlength="100" required>
+
+          <label for="email">Email <span aria-hidden="true">*</span></label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="160" required>
+
+          <label for="resumeLink">Resume link</label>
+          <input id="resumeLink" name="resumeLink" type="url" inputmode="url" placeholder="https://" maxlength="255">
+
+          <label for="jobOpeningId">Job opening ID <span class="optional">optional</span></label>
+          <input id="jobOpeningId" name="jobOpeningId" type="number" min="1" step="1" inputmode="numeric" placeholder="Link an existing opening">
+          <p class="field-hint">Use the ID of an existing job opening.</p>
+
+          <label for="status">Application status</label>
+          <select id="status" name="status">
+            <option>Applied</option>
+            <option>Screening</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Hired</option>
+            <option>Rejected</option>
+          </select>
+
+          <button class="button button-primary submit-button" id="submitButton" type="submit">Add application</button>
+          <p class="form-footnote"><span aria-hidden="true">*</span> Required fields</p>
+        </form>
+      </aside>
+
+      <section class="list-panel" aria-labelledby="applications-title">
+        <div class="list-heading">
+          <div>
+            <p class="eyebrow">RECRUITING WORKSPACE</p>
+            <h2 id="applications-title">Applications <span class="result-count" id="resultCount">0</span></h2>
+          </div>
+          <div class="list-controls">
+            <label class="visually-hidden" for="searchInput">Search candidates</label>
+            <input id="searchInput" class="search-input" type="search" placeholder="Search candidates" autocomplete="off">
+            <label class="visually-hidden" for="statusFilter">Filter by status</label>
+            <select id="statusFilter" class="filter-select">
+              <option value="">All statuses</option>
+              <option>Applied</option>
+              <option>Screening</option>
+              <option>Interview</option>
+              <option>Offer</option>
+              <option>Hired</option>
+              <option>Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Candidate applications in the recruitment pipeline</caption>
+            <thead>
+              <tr>
+                <th scope="col">Candidate</th>
+                <th scope="col">Job opening</th>
+                <th scope="col">Status</th>
+                <th scope="col">Resume</th>
+                <th scope="col"><span class="visually-hidden">Actions</span></th>
+              </tr>
+            </thead>
+            <tbody id="applicationRows">
+              <tr><td class="table-message" colspan="5">Loading applications...</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="detail-hint">Open a candidate row to see interview stages, panel scheduling and feedback when available.</p>
+      </section>
+    </section>
+  </main>
+
+  <footer class="page-footer">Hireflow <span aria-hidden="true">/</span> Interview Management</footer>
+</body>
+</html>
